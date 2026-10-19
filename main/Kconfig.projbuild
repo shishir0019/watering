@@ -1,0 +1,101 @@
+menu "Watering Controller"
+
+    menu "Wi-Fi"
+        config WATER_WIFI_SSID
+            string "Wi-Fi SSID"
+            default ""
+
+        config WATER_WIFI_PASSWORD
+            string "Wi-Fi password"
+            default ""
+
+        config WATER_HOSTNAME
+            string "Hostname"
+            default "watering"
+    endmenu
+
+    menu "Login"
+        config WATER_ADMIN_PASSWORD
+            string "Initial admin password (min 8 characters)"
+            default "changeme123"
+            help
+                Used on first boot, or on every boot while "Reset password on boot" is enabled.
+                Change it from the website after the first login.
+
+        config WATER_RESET_PASSWORD
+            bool "Reset password on boot"
+            default n
+            help
+                Replace the stored password with the initial admin password and log out all
+                sessions on every boot. Enable only to recover a forgotten password, then disable
+                it and reflash.
+    endmenu
+
+    menu "Pumps"
+        config WATER_PUMP_COUNT
+            int "Number of pumps"
+            range 1 4
+            default 1
+
+        config WATER_RELAY_ACTIVE_LOW
+            bool "Relays are active-LOW"
+            default y
+
+        config WATER_MAX_CONCURRENT
+            int "Max pumps running at once"
+            range 1 4
+            default 1
+
+        config WATER_MAX_RUN_S
+            int "Max run time (seconds)"
+            range 5 3600
+            default 600
+
+        config WATER_RELAY1_GPIO
+            int "Relay 1 GPIO"
+            range 0 39
+            default 26
+
+        config WATER_RELAY2_GPIO
+            int "Relay 2 GPIO"
+            range 0 39
+            default 27
+
+        config WATER_RELAY3_GPIO
+            int "Relay 3 GPIO"
+            range 0 39
+            default 25
+
+        config WATER_RELAY4_GPIO
+            int "Relay 4 GPIO"
+            range 0 39
+            default 33
+    endmenu
+
+    menu "Clock and power loss"
+        config WATER_TZ
+            string "Time zone (POSIX TZ)"
+            default "<+06>-6"
+
+        config WATER_RTC_SDA_GPIO
+            int "RTC SDA GPIO"
+            range 0 39
+            default 21
+
+        config WATER_RTC_SCL_GPIO
+            int "RTC SCL GPIO"
+            range 0 39
+            default 22
+
+        config WATER_SETTLE_DELAY_S
+            int "Power settle delay (seconds)"
+            range 0 3600
+            default 120
+
+        config WATER_CATCHUP_WINDOW_MIN
+            int "Catch-up window (minutes)"
+            range 0 1440
+            default 240
+    endmenu
+
+endmenu
